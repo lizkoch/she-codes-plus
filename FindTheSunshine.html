@@ -69,14 +69,21 @@
     <hr />
 
     <h1>Current Weather</h1>
-    <div class="timeNow">Thursday 12:00 PM</div>
-    <div class="localCityBox">
-      <h3 class="currentCity">Lisbon</h3>
-      <h4>Portugal</h4>
-      <img src="" class="imgBox" />
-      <h5>18ºC</h5>
-    </div>
 
+    <div class="localCityBox">
+      <div class="current-location">Location<div>
+      <div class="timeNow">Time</div>
+      <div class="lead main-weather">
+        <span class="temperature-main">Temp</span> |
+        <span class="wind-speed-main">Wind Speed</span>
+      </div>
+      <div class="container detailed-weather">
+        <div class="description-main">Description</div>
+        <div class="percipitation-main">Perc</div>
+      </div>
+      
+    </div>
+    <br />
     <h2>Need Inspiration?</h2>
     <div class="sunnyCities row">
       <div class="cityBox1 col-sm-4">
@@ -156,5 +163,21 @@
     let apiPath = "weather";
     let city = "Lisbon";
     let apiParams = `q=${city}&appid=${apiKey}`;
+
+    axios.get(`${url}/${path}?${apiParams}`).then(function(response) {
+      let currentTemperature = Math.round(response.data.main.temp);
+      let currentWindSpeed = `${response.data.wind.speed}`;
+      let description = response.data.weather[0].description;
+      let currentPericipation = response.data.rain;
+      let location = document.querySelector(".current-location");
+      location.innerHTML = city;
+      let mainTemperature = document.querySelector(".temperature-main");
+      let mainWindSpeed = document.querySelector(".wind-speed-main");
+      let mainDescription = document.querySelector(".description-main");
+      let mainPercipitation = document.querySelector(".percipitation-main");
+      mainTemperature.innerHTML = `Temp: ${currentTemperature} C`;
+      mainWindSpeed.innerHTML = `Wind Speed: ${currentWindSpeed} m/s`;
+      mainPercipitation.innerHTML = `${currentPericipation}`;
+    });
   </script>
 </html>
