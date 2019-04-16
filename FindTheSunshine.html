@@ -69,12 +69,12 @@
     <hr />
 
     <h1>Current Weather</h1>
-    <p></p>
+    <p class="date">Date</p>
     <div class="localCityBox">
-      <h3>New York</h3>
-      <h4>USA</h4>
+      <h3 class="currentCity">Lisbon</h3>
+      <h4>Portugal</h4>
       <img src="" class="imgBox" />
-      <p>18ºC</p>
+      <h5>18ºC</h5>
     </div>
 
     <h2>Need Inspiration?</h2>
@@ -106,36 +106,52 @@
     </div>
   </body>
   <script>
-    let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
-    console.log(axios);
+        let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
+        console.log(axios);
 
-    let apiUrl = "https://api.openweathermap.org/data/2.5";
-    let apiPath = "weather";
-    let city = "Lisbon";
-    let apiParams = `q=${city}&appid=${apiKey}`;
-    let weekDays = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ];
-    let day = weekDays[date.getDay()];
+        let apiUrl = "https://api.openweathermap.org/data/2.5";
+        let apiPath = "weather";
+        let city = "Lisbon";
+        let apiParams = `q=${city}&appid=${apiKey}`;
 
-    console.log(`${apiUrl}/${apiPath}?${apiParams}`);
+        ];
 
-    function getWeather(response) {
-      let temperature = response.data.main.temp;
-      temperature = Math.round(temperature);
-      let city = response.data.name;
-      console.log(temperature);
-      let h3 = document.querySelector(".localCityBox");
-      h3.innerHTML = `${weekDays[now.getDay()]} ${city}`;
+    let now = new Date();
+    function formatDate(date) {
+      let weekDays = [
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      let year = date.getFullYear();
+      let weekDay = weekDays[date.getDay()];
+      let dayOfMonth = date.getDate();
+      return `${dayOfMonth} ${weekDay} ${year}`;
     }
-    axios
-      .get(`${apiUrl}/${apiPath}?${apiParams}&units=metric`)
-      .then(getWeather);
+
+    function formatTime(time) {
+      let hour = time.getHours();
+      let minute = time.getMinutes();
+      let fullTime = `${hour}:${minute}`;
+      if (minute < 10) {
+        return `${hour}:0${minute}`;
+      }
+
+      } else {
+        return `${hour}:${minute}`;
+      }
+    }
+    let date = document.querySelector(".date");
+    date.innerHTML = `${formatDate(now)} ${formatTime(now)}`;
+        }
+
+        function getWeather(response) {
+          let temperature = response.data.main.temp;
+          temperature = Math.round(temperature);
+          let city = response.data.name;
+          console.log(temperature);
+          let h5 = document.querySelector(h5);
+          h5.innerHTML = ;
+        }
+        axios
+          .get(`${apiUrl}/${apiPath}?${apiParams}&units=metric`)
+          .then(getWeather);
   </script>
 </html>
