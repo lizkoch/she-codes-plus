@@ -69,7 +69,7 @@
     <hr />
 
     <h1>Current Weather</h1>
-    <p class="date">Date</p>
+    <div class="timeNow">Thursday 12:00 PM</div>
     <div class="localCityBox">
       <h3 class="currentCity">Lisbon</h3>
       <h4>Portugal</h4>
@@ -101,57 +101,60 @@
         <p>18ºC</p>
       </div>
     </div>
+    <br />
     <div class="newCity">
       <button type="button" class="btn btn-info">Add a new location!</button>
     </div>
   </body>
   <script>
-        let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
-        console.log(axios);
-
-        let apiUrl = "https://api.openweathermap.org/data/2.5";
-        let apiPath = "weather";
-        let city = "Lisbon";
-        let apiParams = `q=${city}&appid=${apiKey}`;
-
-        ];
-
     let now = new Date();
+    console.log(now);
+
     function formatDate(date) {
       let weekDays = [
-        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      let year = date.getFullYear();
-      let weekDay = weekDays[date.getDay()];
-      let dayOfMonth = date.getDate();
-      return `${dayOfMonth} ${weekDay} ${year}`;
-    }
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ];
 
-    function formatTime(time) {
-      let hour = time.getHours();
-      let minute = time.getMinutes();
-      let fullTime = `${hour}:${minute}`;
-      if (minute < 10) {
-        return `${hour}:0${minute}`;
+      let weekNow = weekDays[now.getDay()];
+      let hoursNow = now.getHours();
+      let minutesNow = now.getMinutes();
+
+      if (minutesNow < 10) {
+        return `0${minutesNow}`;
       }
 
+      if (hoursNow < 10) {
+        periodTime = "AM";
+        hoursNow = `0${hoursNow}`;
       } else {
-        return `${hour}:${minute}`;
+        periodTime = "PM";
       }
-    }
-    let date = document.querySelector(".date");
-    date.innerHTML = `${formatDate(now)} ${formatTime(now)}`;
-        }
 
-        function getWeather(response) {
-          let temperature = response.data.main.temp;
-          temperature = Math.round(temperature);
-          let city = response.data.name;
-          console.log(temperature);
-          let h5 = document.querySelector(h5);
-          h5.innerHTML = ;
-        }
-        axios
-          .get(`${apiUrl}/${apiPath}?${apiParams}&units=metric`)
-          .then(getWeather);
+      let findTime = `${weekNow} ${hoursNow}:${minutesNow} ${periodTime}`;
+
+      let timeNow = document.querySelector(".timeNow");
+      timeNow.innerHTML = `${findTime}`;
+
+      let timeCurrentLocation = document.querySelector(
+        ".current-time-location"
+      );
+      timeCurrentLocation.innerHTML = `${hoursNow}:${minutesNow}`;
+    }
+
+    let nowDate = formatDate(now);
+
+    let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
+    console.log(axios);
+
+    let apiUrl = "https://api.openweathermap.org/data/2.5";
+    let apiPath = "weather";
+    let city = "Lisbon";
+    let apiParams = `q=${city}&appid=${apiKey}`;
   </script>
 </html>
