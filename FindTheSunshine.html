@@ -22,6 +22,7 @@
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
       crossorigin="anonymous"
     />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <style>
       h1 {
@@ -62,15 +63,16 @@
         placeholder="Which city is calling you?"
         autocomplete="off"
         value=""
-      /><input type="submit" class="button-current btn-info" value="Search" />
+      />
+      <input type="submit" class="button-current btn-info" value="Search" />
     </form>
     <hr />
 
     <h1>Current Weather</h1>
+    <p></p>
     <div class="localCityBox">
       <h3>New York</h3>
       <h4>USA</h4>
-      <p>12 hours of sun</p>
       <img src="" class="imgBox" />
       <p>18ºC</p>
     </div>
@@ -103,4 +105,37 @@
       <button type="button" class="btn btn-info">Add a new location!</button>
     </div>
   </body>
+  <script>
+    let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
+    console.log(axios);
+
+    let apiUrl = "https://api.openweathermap.org/data/2.5";
+    let apiPath = "weather";
+    let city = "Lisbon";
+    let apiParams = `q=${city}&appid=${apiKey}`;
+    let weekDays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+    let day = weekDays[date.getDay()];
+
+    console.log(`${apiUrl}/${apiPath}?${apiParams}`);
+
+    function getWeather(response) {
+      let temperature = response.data.main.temp;
+      temperature = Math.round(temperature);
+      let city = response.data.name;
+      console.log(temperature);
+      let h3 = document.querySelector(".localCityBox");
+      h3.innerHTML = `${weekDays[now.getDay()]} ${city}`;
+    }
+    axios
+      .get(`${apiUrl}/${apiPath}?${apiParams}&units=metric`)
+      .then(getWeather);
+  </script>
 </html>
