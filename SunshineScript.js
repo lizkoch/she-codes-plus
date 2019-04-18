@@ -12,7 +12,7 @@ function formatDate(date) {
     "Saturday"
   ];
 
-  let weekNow = weekDays[now.getDay()];
+  let dayNow = weekDays[now.getDay()];
   let hoursNow = now.getHours();
   let minutesNow = now.getMinutes();
 
@@ -26,7 +26,7 @@ function formatDate(date) {
     periodTime = "PM";
   }
 
-  let findTime = `${weekNow} ${hoursNow}:${minutesNow} ${periodTime}`;
+  let findTime = `${dayNow} ${hoursNow}:${minutesNow} ${periodTime}`;
 
   let timeNow = document.querySelector(".timeNow");
   timeNow.innerHTML = `${findTime}`;
@@ -35,29 +35,24 @@ function formatDate(date) {
 let nowDate = formatDate(now);
 
 let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
-console.log(axios);
-
-let apiUrl = "https://api.openweathermap.org/data/2.5";
-let apiPath = "weather";
+let url = "https://api.openweathermap.org/data/2.5/";
+let path = "weather";
 let city = "Lisbon";
-let apiParams = `q=${city}&appid=${apiKey}`;
+let units = "metric";
+let appParams = `q=${city}&appid=${apiKey}&units=${units}`;
 
-let place = document.querySelector("#main-city");
-let description = document.querySelector("#weather-description");
-let temperature = document.querySelector("#temperature-main");
-let humidityLevel = document.querySelector("#weather-humidity-level");
-let windSpeed = document.querySelector("#wind-speed-main");
+console.log(`${url}/${path}?${appParams}`);
+
+axios.get(`${url}/${path}?${appParams}`).then(function(response) {
+  let description = document.querySelector("#description-main");
+  let temperature = document.querySelector("#temperature-main");
+  let humidityLevel = document.querySelector("#humidity-main");
+  let windSpeed = document.querySelector("#wind-speed-main");
+});
 
 function refreshWeather(response) {
-  place.innerHTML = response.data.name;
   description.innerHTML = response.data.weather[0].description;
   temperature.innerHTML = Math.round(response.data.main.temp);
   humidityLevel.innerHTML = response.data.main.humidity;
   windSpeed.innerHTML = Math.round(response.data.wind.speed);
-}
-
-function search(city) {
-  let apiUrl = `${apiRoot}/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-  axios.get(apiUrl).then(refreshWeather);
 }
