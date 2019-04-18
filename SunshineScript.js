@@ -30,9 +30,6 @@ function formatDate(date) {
 
   let timeNow = document.querySelector(".timeNow");
   timeNow.innerHTML = `${findTime}`;
-
-  let timeCurrentLocation = document.querySelector(".current-time-location");
-  timeCurrentLocation.innerHTML = `${hoursNow}:${minutesNow}`;
 }
 
 let nowDate = formatDate(now);
@@ -42,7 +39,7 @@ console.log(axios);
 
 let apiUrl = "https://api.openweathermap.org/data/2.5";
 let apiPath = "weather";
-let defaultCity = "New York";
+let city = "Lisbon";
 let apiParams = `q=${city}&appid=${apiKey}`;
 
 let place = document.querySelector("#main-city");
@@ -52,10 +49,6 @@ let humidityLevel = document.querySelector("#weather-humidity-level");
 let windSpeed = document.querySelector("#wind-speed-main");
 
 function refreshWeather(response) {
-  let iconUrl = `http://openweathermap.org/img/w/${
-    response.data.weather[0].icon
-  }.png`;
-
   place.innerHTML = response.data.name;
   description.innerHTML = response.data.weather[0].description;
   temperature.innerHTML = Math.round(response.data.main.temp);
