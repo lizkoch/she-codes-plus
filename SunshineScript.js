@@ -28,7 +28,7 @@ function formatDate(date) {
 
   let findTime = `${dayNow} ${hoursNow}:${minutesNow} ${periodTime}`;
 
-  let timeNow = document.querySelector(".timeNow");
+  let timeNow = document.querySelector("#timeNow");
   timeNow.innerHTML = `${findTime}`;
 }
 
