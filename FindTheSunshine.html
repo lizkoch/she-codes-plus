@@ -23,6 +23,7 @@
       crossorigin="anonymous"
     />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
   <link 
   rel="stylesheet" 
   href="SunshineStyle.css" 
@@ -46,15 +47,15 @@
     <h1>Current Weather</h1>
 
     <div class="localCityBox">
-      <div class="current-location">Location<div>
+      <div class="main-city">Location<div>
       <div class="timeNow">Time</div>
       <div class="lead main-weather">
-        <span class="temperature-main">Temp</span> |
-        <span class="wind-speed-main">Wind Speed</span>
+        <span id="temperature-main">Temp</span><small>°C</small>
+        <span id="wind-speed-main">Wind Speed</span>
       </div>
       <div class="container detailed-weather">
-        <div class="description-main">Description</div>
-        <div class="percipitation-main">Perc</div>
+        <div id="description-main">Description</div>
+        <div id="percipitation-main">Perc</div>
       </div>
       
     </div>
@@ -87,73 +88,6 @@
     <div class="newCity">
       <button type="button" class="btn btn-info">Add a new location!</button>
     </div>
-
-  <script>
-    let now = new Date();
-    console.log(now);
-
-    function formatDate(date) {
-      let weekDays = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ];
-
-      let weekNow = weekDays[now.getDay()];
-      let hoursNow = now.getHours();
-      let minutesNow = now.getMinutes();
-
-      if (minutesNow < 10) {
-        return `0${minutesNow}`;
-      }
-
-      if (hoursNow < 10) {
-        periodTime = "AM";
-        hoursNow = `0${hoursNow}`;
-      } else {
-        periodTime = "PM";
-      }
-
-      let findTime = `${weekNow} ${hoursNow}:${minutesNow} ${periodTime}`;
-
-      let timeNow = document.querySelector(".timeNow");
-      timeNow.innerHTML = `${findTime}`;
-
-      let timeCurrentLocation = document.querySelector(
-        ".current-time-location"
-      );
-      timeCurrentLocation.innerHTML = `${hoursNow}:${minutesNow}`;
-    }
-
-    let nowDate = formatDate(now);
-
-    let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
-    console.log(axios);
-
-    let apiUrl = "https://api.openweathermap.org/data/2.5";
-    let apiPath = "weather";
-    let city = "Lisbon";
-    let apiParams = `q=${city}&appid=${apiKey}`;
-
-    axios.get(`${url}/${path}?${apiParams}`).then(function(response) {
-      let currentTemperature = Math.round(response.data.main.temp);
-      let currentWindSpeed = `${response.data.wind.speed}`;
-      let description = response.data.weather[0].description;
-      let currentPericipation = response.data.rain;
-      let location = document.querySelector(".current-location");
-      location.innerHTML = city;
-      let mainTemperature = document.querySelector(".temperature-main");
-      let mainWindSpeed = document.querySelector(".wind-speed-main");
-      let mainDescription = document.querySelector(".description-main");
-      let mainPercipitation = document.querySelector(".percipitation-main");
-      mainTemperature.innerHTML = `Temp: ${currentTemperature} C`;
-      mainWindSpeed.innerHTML = `Wind Speed: ${currentWindSpeed} m/s`;
-      mainPercipitation.innerHTML = `${currentPericipation}`;
-    });
-  </script>
+    <script src="SunshineScript.js"></script>
   </body>
 </html>
