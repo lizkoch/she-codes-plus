@@ -48,11 +48,9 @@ axios.get(`${url}/${path}?${appParams}`).then(function(response) {
   let temperature = document.querySelector("#temperature-main");
   let humidityLevel = document.querySelector("#humidity-main");
   let windSpeed = document.querySelector("#wind-speed-main");
-});
-
-function refreshWeather(response) {
+  console.log(windSpeed.value);
   description.innerHTML = response.data.weather[0].description;
   temperature.innerHTML = Math.round(response.data.main.temp);
   humidityLevel.innerHTML = response.data.main.humidity;
   windSpeed.innerHTML = Math.round(response.data.wind.speed);
-}
+});
