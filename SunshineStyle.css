@@ -1,0 +1,26 @@
+h1 {
+  font-family: "Pacifico", cursive;
+  color: #ffffff;
+  background-color: #ffa000;
+}
+h2 {
+  font-family: "Pacifico", cursive;
+  color: #ffecb3;
+  background-color: #ffc107;
+}
+.localCityBox {
+  font-family: "Quicksand", sans-serif;
+  background-color: #ffc107;
+  color: #212121;
+}
+.sunnyCities {
+  font-family: "Quicksand", sans-serif;
+  background-color: #ffc107;
+  color: #212121;
+}
+.search.Current {
+  font-family: "Quicksand", sans-serif;
+}
+.button-current {
+  font-family: "Quicksand", sans-serif;
+}
