@@ -34,30 +34,34 @@ function formatDate(date) {
 
 let nowDate = formatDate(now);
 
-let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
-let url = "https://api.openweathermap.org/data/2.5/";
-let path = "weather";
-let city = "Lisbon";
-let units = "metric";
-let appParams = `q=${city}&appid=${apiKey}&units=${units}`;
+let form = document.querySelector("search-city");
+form.addEventListener("submit", handleFormSubmit);
 
-console.log(`${url}/${path}?${appParams}`);
-
-axios.get(`${url}/${path}?${appParams}`).then(function(response) {
-  let description = document.querySelector("#description-main");
-  let temperature = document.querySelector("#temperature-main");
-  let humidityLevel = document.querySelector("#humidity-main");
-  let windSpeed = document.querySelector("#wind-speed-main");
-  description.innerHTML = response.data.weather[0].description;
-  temperature.innerHTML = Math.round(response.data.main.temp);
-  humidityLevel.innerHTML = response.data.main.humidity;
-  windSpeed.innerHTML = Math.round(response.data.wind.speed);
-});
-
-function searchForCity(event) {
+function handleFormSubmit(event) {
   event.preventDefault();
-  let searchedCity = document.querySelector("#searched-city");
-  console.log(searchedCity.value);
+
+  let city = document.querySelector("#searched-city").value;
+
+  getWeather(city);
 }
-let cityAnswer = document.querySelector("#searched-city");
-cityAnswer.addEventListener("submit", searchForCity);
+
+function getWeather(city) {
+  event.preventDefault();
+  let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
+  let url = "https://api.openweathermap.org/data/2.5/";
+  let path = "weather";
+  let units = "metric";
+  let appParams = `q=${city}&appid=${apiKey}&units=${units}`;
+
+  axios.get(`${url}/${path}?${appParams}`).then(function(response) {
+    let description = document.querySelector("#description-main");
+    let temperature = document.querySelector("#temperature-main");
+    let humidityLevel = document.querySelector("#humidity-main");
+    let windSpeed = document.querySelector("#wind-speed-main");
+    description.innerHTML = response.data.weather[0].description;
+    temperature.innerHTML = Math.round(response.data.main.temp);
+    humidityLevel.innerHTML = response.data.main.humidity;
+    windSpeed.innerHTML = Math.round(response.data.wind.speed);
+  });
+}
+getWeather("Lisbon");
