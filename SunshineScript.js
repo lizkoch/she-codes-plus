@@ -34,7 +34,7 @@ function formatDate(date) {
 
 let nowDate = formatDate(now);
 
-let form = document.querySelector("search-city");
+let form = document.querySelector(".search-city");
 form.addEventListener("submit", handleFormSubmit);
 
 function handleFormSubmit(event) {
@@ -46,7 +46,6 @@ function handleFormSubmit(event) {
 }
 
 function getWeather(city) {
-  event.preventDefault();
   let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
   let url = "https://api.openweathermap.org/data/2.5/";
   let path = "weather";
