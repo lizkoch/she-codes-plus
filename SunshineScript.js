@@ -57,12 +57,12 @@ function getWeather(city) {
     let temperature = document.querySelector("#temperature-main");
     let humidityLevel = document.querySelector("#humidity-main");
     let windSpeed = document.querySelector("#wind-speed-main");
-    let mainCity = document.querySelector("#main-city");
+    let mainCity = document.querySelector("#big-city");
     description.innerHTML = response.data.weather[0].description;
     temperature.innerHTML = Math.round(response.data.main.temp);
     humidityLevel.innerHTML = response.data.main.humidity;
     windSpeed.innerHTML = Math.round(response.data.wind.speed);
-    mainCity.innerHRML = response.data.name;
+    mainCity.innerHTML = response.data.name;
   });
 }
 getWeather("Lisbon");
