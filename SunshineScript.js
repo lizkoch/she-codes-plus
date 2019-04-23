@@ -40,7 +40,7 @@ form.addEventListener("submit", handleFormSubmit);
 function handleFormSubmit(event) {
   event.preventDefault();
 
-  let city = document.querySelector("#searched-city").value;
+  let city = document.querySelector(".search-city").value;
 
   getWeather(city);
 }
@@ -57,10 +57,12 @@ function getWeather(city) {
     let temperature = document.querySelector("#temperature-main");
     let humidityLevel = document.querySelector("#humidity-main");
     let windSpeed = document.querySelector("#wind-speed-main");
+    let mainCity = document.querySelector("#main-city");
     description.innerHTML = response.data.weather[0].description;
     temperature.innerHTML = Math.round(response.data.main.temp);
     humidityLevel.innerHTML = response.data.main.humidity;
     windSpeed.innerHTML = Math.round(response.data.wind.speed);
+    mainCity.innerHRML = response.data.name;
   });
 }
 getWeather("Lisbon");
