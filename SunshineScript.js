@@ -40,7 +40,7 @@ form.addEventListener("submit", handleFormSubmit);
 function handleFormSubmit(event) {
   event.preventDefault();
 
-  let city = document.querySelector("#searched-for-city").value;
+  let city = document.querySelector("#search-for-city").value;
 
   getWeather(city);
 }
