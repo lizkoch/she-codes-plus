@@ -31,36 +31,43 @@
   </head>
   <title>Find The Sun</title>
   <body>
-    <h1>Where is it sunny?</h1>
-
-    <form class="search-city">
-      <input
-        type="search"
-        id="search-for-city"
-        placeholder="Which city is calling you?"
-        autocomplete="off"
-      />
-      <input type="submit" class="btn btn-info" value="Search" />
-    </form>
-    <hr />
-
-    <h1>Current Weather</h1>
-
-    <div class="localCityBox">
-      <div id="main-city">Lisbon<div>
-      <div id="timeNow">Time</div>
-      <div class="lead main-weather">
-        <span id="temperature-main">Temp</span><small>°C</small>
-        <div id="description-main">Description</div>
-       
-      </div>
-      <div class="container detailed-weather">
-        Wind Speed: <span id="wind-speed-main">Wind Speed</span> km/hr
-        Humidity: <dpan id="humidity-main">Perc</span> %
-      </div>
+  
       
-    </div>
+<h1>Where is it sunny?</h1>
+
+    <div class="container">
+        <div class="weather">
+            <div class="main-weather">
+                <form class="clearfix float-left" id="weather-search-form">
+                    <div class="form-group float-left">
+                        <input type="text" placeholder="Which city is calling you?" autocomplete="off" class="form-control"
+                            id="weather-search-text-input" />
+                    </div>
+                    <input type="submit" value="Search" class="btn btn-info float-left" />
+                </form>
+                <button id="current-location-button" class="btn btn-primary float-left">
+                    Where You Are
+                </button>
+            </div>
+            <br/>
+            <br/>
+            <h1 id="weather-city"></h1>
+              <h2 class="float-left">
+                <span id="weather-temperature"></span><small>°C</small>
+             </h2>
+             <br/>
+             <br/>
+            <ul>
+                <li id="weather-timestamp"></li>
+                <li id="weather-description"></li>
+                <li>Humidity: <span id="weather-humidity-level"></span>%</li>
+            </ul>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="clearfix">
+
     <br />
+    <br/>
     <h2>Need Inspiration?</h2>
     <div class="sunnyCities row">
       <div class="cityBox1 col-sm-4">
@@ -84,10 +91,6 @@
         <img src="" class="imgBox" />
         <p>18ºC</p>
       </div>
-    </div>
-    <br />
-    <div class="newCity">
-      <button type="button" class="btn btn-info">Add a new location!</button>
     </div>
     <script src="SunshineScript.js"></script>
   </body>

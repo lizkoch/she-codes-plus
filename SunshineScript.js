@@ -1,8 +1,17 @@
-let now = new Date();
-console.log(now);
+let place = document.querySelector("#weather-city");
+let timestamp = document.querySelector("#weather-timestamp");
+let description = document.querySelector("#weather-description");
+let temperature = document.querySelector("#weather-temperature");
+let humidityLevel = document.querySelector("#weather-humidity-level");
+let form = document.querySelector("#weather-search-form");
+let currentLocationButton = document.querySelector("#current-location-button");
+
+let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
+let apiRoot = "https://api.openweathermap.org/data/2.5";
+let defaultCity = "New York";
 
 function formatDate(date) {
-  let weekDays = [
+  let days = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -11,58 +20,59 @@ function formatDate(date) {
     "Friday",
     "Saturday"
   ];
-
-  let dayNow = weekDays[now.getDay()];
-  let hoursNow = now.getHours();
-  let minutesNow = now.getMinutes();
-
-  if (minutesNow < 10) {
-    return `0${minutesNow}`;
+  let day = days[date.getDay()];
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
   }
 
-  if (hoursNow < 12) {
-    periodTime = "AM";
-  } else {
-    periodTime = "PM";
-  }
-
-  let findTime = `${dayNow} ${hoursNow}:${minutesNow} ${periodTime}`;
-
-  let timeNow = document.querySelector("#timeNow");
-  timeNow.innerHTML = `${findTime}`;
+  return `${day} ${hours}:${minutes}`;
 }
 
-let nowDate = formatDate(now);
+function refreshWeather(response) {
+  let iconUrl = `http://openweathermap.org/img/w/${
+    response.data.weather[0].icon
+  }.png`;
 
-let form = document.querySelector(".search-city");
-form.addEventListener("submit", handleFormSubmit);
+  place.innerHTML = response.data.name;
+  timestamp.innerHTML = formatDate(new Date(response.data.dt * 1000));
+  description.innerHTML = response.data.weather[0].description;
+  temperature.innerHTML = Math.round(response.data.main.temp);
+  humidityLevel.innerHTML = response.data.main.humidity;
+}
 
-function handleFormSubmit(event) {
+function search(city) {
+  let apiUrl = `${apiRoot}/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(refreshWeather);
+}
+
+function handleSearch(event) {
   event.preventDefault();
+  let input = document.querySelector("#weather-search-text-input");
 
-  let city = document.querySelector("#search-for-city").value;
-
-  getWeather(city);
+  if (input.value.length > 0) {
+    search(input.value);
+  } else {
+    alert("Please enter a city");
+  }
 }
 
-function getWeather(city) {
-  let apiKey = "e4cc36c73832c7c7ff16bb720a49e759";
-  let url = "https://api.openweathermap.org/data/2.5/";
-  let path = "weather";
-  let units = "metric";
-  let appParams = `q=${city}&appid=${apiKey}&units=${units}`;
+function searchPosition(position) {
+  let apiUrl = `${apiRoot}/weather?lon=${position.coords.longitude}&lat=${
+    position.coords.latitude
+  }&appid=${apiKey}&units=metric`;
 
-  axios.get(`${url}/${path}?${appParams}`).then(function(response) {
-    let description = document.querySelector("#description-main");
-    let temperature = document.querySelector("#temperature-main");
-    let humidityLevel = document.querySelector("#humidity-main");
-    let windSpeed = document.querySelector("#wind-speed-main");
-    let mainCity = document.querySelector("#big-city");
-    description.innerHTML = response.data.weather[0].description;
-    temperature.innerHTML = Math.round(response.data.main.temp);
-    humidityLevel.innerHTML = response.data.main.humidity;
-    windSpeed.innerHTML = Math.round(response.data.wind.speed);
-    mainCity.innerHTML = response.data.name;
-  });
+  axios.get(apiUrl).then(refreshWeather);
 }
-getWeather("Lisbon");
+
+function getCurrentLocationWeather(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(searchPosition);
+}
+
+form.addEventListener("submit", handleSearch);
+currentLocationButton.addEventListener("click", getCurrentLocationWeather);
+
+search(defaultCity);
